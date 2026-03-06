@@ -1,5 +1,5 @@
 import { SYSTEM_PROMPT, USER_PROMPT } from './prompts.js';
-import type { EstimateResponse } from '../../../shared/types.js';
+import type { EstimateResponse } from '../types.js';
 
 interface OpenRouterMessage {
   role: 'system' | 'user' | 'assistant';

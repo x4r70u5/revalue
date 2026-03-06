@@ -3,7 +3,7 @@ import multer from 'multer';
 import sharp from 'sharp';
 import { analyzeDevicePhotos } from '../services/vision.js';
 import { calculateValuation } from '../services/pricing.js';
-import type { FinalizeRequest } from '../../../shared/types.js';
+import type { FinalizeRequest } from '../types.js';
 
 const router = Router();
 

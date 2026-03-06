@@ -6,7 +6,7 @@ import type {
   ValuationResponse,
   Adjustment,
   CosmeticGrade,
-} from '../../../shared/types.js';
+} from '../types.js';
 
 const defaultDeductions = {
   screen_cracked: 300,
