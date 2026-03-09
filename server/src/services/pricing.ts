@@ -8,16 +8,17 @@ import type {
   CosmeticGrade,
 } from '../types.js';
 
-const defaultDeductions = {
-  screen_cracked: 300,
-  screen_burnin: 150,
-  back_cracked: 200,
-  frame_bent: 150,
-  camera_broken: 200,
-  missing_parts: 100,
-  no_power: 500,
-  touch_issues: 250,
-  buttons_broken: 100,
+// Deductions as percentage of base price (0.0 – 1.0)
+const defaultDeductionPcts = {
+  screen_cracked: 0.25,
+  screen_burnin: 0.10,
+  back_cracked: 0.10,
+  frame_bent: 0.08,
+  camera_broken: 0.12,
+  missing_parts: 0.05,
+  no_power: 0.35,
+  touch_issues: 0.15,
+  buttons_broken: 0.05,
 };
 
 const defaultMultipliers: Record<CosmeticGrade, number> = {
@@ -34,10 +35,10 @@ function makeDevice(
   basePrice: number,
   deductionScale = 1.0
 ): DevicePrice {
-  const scaled: DevicePrice['deductions'] = {} as DevicePrice['deductions'];
-  for (const [key, val] of Object.entries(defaultDeductions)) {
-    scaled[key as keyof DevicePrice['deductions']] = Math.round(
-      val * deductionScale
+  const deductions: DevicePrice['deductions'] = {} as DevicePrice['deductions'];
+  for (const [key, pct] of Object.entries(defaultDeductionPcts)) {
+    deductions[key as keyof DevicePrice['deductions']] = Math.round(
+      basePrice * pct * deductionScale
     );
   }
   return {
@@ -46,7 +47,7 @@ function makeDevice(
     storage,
     basePrice,
     conditionMultipliers: { ...defaultMultipliers },
-    deductions: scaled,
+    deductions,
   };
 }
 
@@ -296,7 +297,9 @@ export function calculateValuation(
   }
 
   const totalAdjustment = adjustments.reduce((sum, a) => sum + a.amount, 0);
-  const estimatedValue = Math.max(0, priceEntry.basePrice + totalAdjustment);
+  // Floor: deductions can't exceed 70% of base price (minimum 30% residual value)
+  const minValue = Math.round(priceEntry.basePrice * 0.3);
+  const estimatedValue = Math.max(minValue, priceEntry.basePrice + totalAdjustment);
 
   const rangePct = 0.1;
   const low = Math.max(0, Math.round(estimatedValue * (1 - rangePct)));
