@@ -86,7 +86,7 @@ export default function ManualQuestions({ questions, onSubmit }: Props) {
             : 'bg-xkom-accent/30 text-xkom-muted cursor-not-allowed'
         }`}
       >
-        Oblicz wycene
+        Oblicz wycenę
       </button>
     </div>
   );
