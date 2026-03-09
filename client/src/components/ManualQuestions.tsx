@@ -13,13 +13,15 @@ interface Props {
 }
 
 export default function ManualQuestions({ questions, onSubmit }: Props) {
+  const knownQuestions = questions.filter((q) => q in questionLabels);
+
   const [answers, setAnswers] = useState<Record<string, boolean | null>>(() => {
     const init: Record<string, boolean | null> = {};
-    questions.forEach((q) => (init[q] = null));
+    knownQuestions.forEach((q) => (init[q] = null));
     return init;
   });
 
-  const allAnswered = questions.every((q) => answers[q] !== null);
+  const allAnswered = knownQuestions.every((q) => answers[q] !== null);
 
   function handleSubmit() {
     if (!allAnswered) return;
@@ -42,7 +44,7 @@ export default function ManualQuestions({ questions, onSubmit }: Props) {
       </p>
 
       <div className="space-y-4">
-        {questions.map((q) => (
+        {knownQuestions.map((q) => (
           <div key={q}>
             <p className="mb-2 text-sm text-white">{questionLabels[q]}</p>
             <div className="flex gap-3">
