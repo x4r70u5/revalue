@@ -35,7 +35,7 @@ For remaining_questions, always include these functional checks that CANNOT be d
 
 Only omit a question if photos somehow conclusively answer it (e.g., photo shows device powered on with visible screen content — then you can omit "power_on").
 
-For photo_quality_feedback, suggest additional photos that would improve assessment accuracy.
+For photo_quality_feedback, suggest additional photos that would improve assessment accuracy. Write ALL notes and photo_quality_feedback strings in Polish.
 
 You MUST respond with valid JSON matching this exact structure (no markdown, no code fences, just raw JSON):
 {
