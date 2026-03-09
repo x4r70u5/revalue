@@ -295,11 +295,8 @@ export function calculateValuation(
     });
   }
 
-  const totalDeductions = adjustments.reduce(
-    (sum, a) => sum + (a.amount < 0 ? a.amount : 0),
-    0
-  );
-  const estimatedValue = Math.max(0, adjustedBase + totalDeductions);
+  const totalAdjustment = adjustments.reduce((sum, a) => sum + a.amount, 0);
+  const estimatedValue = Math.max(0, priceEntry.basePrice + totalAdjustment);
 
   const rangePct = 0.1;
   const low = Math.max(0, Math.round(estimatedValue * (1 - rangePct)));
