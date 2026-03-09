@@ -74,7 +74,7 @@ export default function ValuationResult({ valuation, device, onReset }: Props) {
           Nowa wycena
         </button>
         <a
-          href="https://www.x-kom.pl/odkup"
+          href="https://www.x-kom.pl/lp/odkup"
           target="_blank"
           rel="noopener noreferrer"
           className="flex-1 rounded-lg bg-xkom-green py-3 text-sm font-semibold text-white hover:bg-xkom-green/90 transition-colors text-center"
