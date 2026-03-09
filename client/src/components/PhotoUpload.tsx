@@ -116,24 +116,30 @@ export default function PhotoUpload({ onSubmit }: Props) {
         />
       </div>
 
-      {/* Capture button for mobile */}
+      {/* Capture button for mobile, info text for desktop */}
       {files.length < MAX_FILES && (
-        <button
-          onClick={() => {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.capture = 'environment';
-            input.onchange = (e) => {
-              const target = e.target as HTMLInputElement;
-              if (target.files) addFiles(target.files);
-            };
-            input.click();
-          }}
-          className="w-full rounded-lg border border-xkom-accent/50 px-4 py-3 text-sm text-xkom-muted hover:border-xkom-green/50 hover:text-white transition-colors"
-        >
-          Zrob zdjecie aparatem
-        </button>
+        'ontouchstart' in window || navigator.maxTouchPoints > 0 ? (
+          <button
+            onClick={() => {
+              const input = document.createElement('input');
+              input.type = 'file';
+              input.accept = 'image/*';
+              input.capture = 'environment';
+              input.onchange = (e) => {
+                const target = e.target as HTMLInputElement;
+                if (target.files) addFiles(target.files);
+              };
+              input.click();
+            }}
+            className="w-full rounded-lg border border-xkom-accent/50 px-4 py-3 text-sm text-xkom-muted hover:border-xkom-green/50 hover:text-white transition-colors"
+          >
+            Zrob zdjecie aparatem
+          </button>
+        ) : (
+          <p className="text-center text-xs text-xkom-muted/70 py-2">
+            Wykonaj zdjecie w wersji mobilnej
+          </p>
+        )
       )}
 
       {/* Previews */}
